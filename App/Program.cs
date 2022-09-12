@@ -23,17 +23,28 @@ namespace WebAPIClient
         }
         static async Task Main(string[] args)
         {
-            var repositories = await ProcessRepositories();
+            Thread.Sleep(3000);
+            Console.WriteLine("user Proxy: {0} ", clientHandler.UseProxy);
+            Console.WriteLine("{0} : proxy", clientHandler.Proxy);
 
-            foreach (var repo in repositories)
+            try
             {
-                Console.WriteLine("Repo: {0}, Url: {2}",
-                repo.Name,
-                repo.Description,
-                repo.GitHubHomeUrl,
-                repo.Homepage,
-                repo.Watchers);
-                Console.WriteLine("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+                var repositories = await ProcessRepositories();
+
+                foreach (var repo in repositories)
+                {
+                    Console.WriteLine("Repo: {0}, Url: {2}",
+                    repo.Name,
+                    repo.Description,
+                    repo.GitHubHomeUrl,
+                    repo.Homepage,
+                    repo.Watchers);
+                    Console.WriteLine("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.Write(ex.Message);
             }
         }
         private static async Task<List<Repository>> ProcessRepositories()
