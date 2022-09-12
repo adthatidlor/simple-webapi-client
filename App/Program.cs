@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text.Json;
@@ -10,8 +11,16 @@ namespace WebAPIClient
 {
     class Program
     {
-        private static readonly HttpClient client = new HttpClient();
+        private static HttpClientHandler clientHandler = newHandler();
+        private static readonly HttpClient client = new HttpClient(clientHandler, true);
 
+        static HttpClientHandler newHandler()
+        {
+            return new HttpClientHandler
+            {
+                Proxy = HttpClient.DefaultProxy
+            };
+        }
         static async Task Main(string[] args)
         {
             var repositories = await ProcessRepositories();
