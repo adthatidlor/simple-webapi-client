@@ -18,7 +18,8 @@ namespace WebAPIClient
         {
             return new HttpClientHandler
             {
-                Proxy = HttpClient.DefaultProxy
+                Proxy = HttpClient.DefaultProxy,
+                UseDefaultCredentials = false
             };
         }
         static async Task Main(string[] args)
@@ -26,7 +27,7 @@ namespace WebAPIClient
             Thread.Sleep(3000);
             Console.WriteLine("user Proxy: {0} ", clientHandler.UseProxy);
             Console.WriteLine("{0} : proxy", clientHandler.Proxy);
-
+            WebProxy pp = new WebProxy();
             try
             {
                 var repositories = await ProcessRepositories();
